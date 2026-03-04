@@ -11,10 +11,15 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL,
-    "http://localhost:3000"
-  ],
+  origin: function(origin, callback) {
+    // Allow requests with no origin (Postman, mobile apps)
+    if (!origin) return callback(null, true);
+    // Allow any vercel.app domain + localhost
+    if (origin.includes("vercel.app") || origin.includes("localhost")) {
+      return callback(null, true);
+    }
+    callback(new Error("Not allowed by CORS"));
+  },
   credentials: true
 }));
 app.use(express.json());
