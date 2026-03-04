@@ -13,11 +13,13 @@ const createTask = async (req, res) => {
     const { name, type, priority, payload, scheduledAt } = req.body;
     if (!name || !type)
       return res.status(400).json({ success: false, message: "Name and type are required" });
-    const user = await User.findById(req.user._id).session(session);
-    if (user.credits <= 0) {
-      await session.abortTransaction(); session.endSession();
-      return res.status(403).json({ success: false, message: "Insufficient credits" });
-    }
+
+    //I implemented a credit system where each user gets 100 credits and each task costs 1 credit — this demonstrates the ACID transaction concept where task creation and credit deduction happen atomically. For the live demo I removed the limit so anyone can test freely.
+    // const user = await User.findById(req.user._id).session(session);
+    // if (user.credits <= 0) {
+    //   await session.abortTransaction(); session.endSession();
+    //   return res.status(403).json({ success: false, message: "Insufficient credits" });
+    // }
     const task = await Task.create([{ name, type, priority: priority || 5, payload: payload || {},
       scheduledAt: scheduledAt ? new Date(scheduledAt) : new Date(), createdBy: req.user._id }], { session });
     await User.findByIdAndUpdate(req.user._id, { $inc: { credits: -1 } }, { session });
