@@ -87,8 +87,20 @@ class Scheduler {
   _createWorkerThread(task) {
     const workerPath = path.join(__dirname, "../workers/taskWorker.js");
     const worker = new Worker(workerPath, {
-      workerData: { taskId: task._id.toString(), taskName: task.name, taskType: task.type,
-        taskPayload: task.payload, workerId: task.workerId, createdBy: task.createdBy.toString() },
+      workerData: {
+        taskId: task._id.toString(),
+        taskName: task.name,
+        taskType: task.type,
+        taskPayload: task.payload,
+        workerId: task.workerId,
+        createdBy: task.createdBy.toString(),
+        // ✅ Pass env vars explicitly to worker
+        env: {
+          MONGO_URI: process.env.MONGO_URI,
+          EMAIL_USER: process.env.EMAIL_USER,
+          EMAIL_PASS: process.env.EMAIL_PASS,
+        }
+      },
     });
     this.activeWorkers.set(task.workerId, worker);
     logger.info(`Worker spawned for "${task.name}"`);
