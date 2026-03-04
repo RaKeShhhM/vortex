@@ -19,16 +19,11 @@ class EmailJob extends BaseJob {
 
     // Create Gmail transporter
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // TLS
+      service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
-      tls: {
-        rejectUnauthorized: false // ✅ fixes connection issues on cloud servers
-      }
     });
 
     // Send the actual email

@@ -1,10 +1,6 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL
-    ? `${process.env.REACT_APP_API_URL}/api`
-    : "/api", // fallback for local development
-});
+const api = axios.create({ baseURL: "/api" });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("vortex_token");
