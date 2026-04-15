@@ -3,10 +3,6 @@
 A production-grade task scheduling system built with the MERN stack,
 implementing core OS, DBMS, and OOP concepts.
 
-## 🚀 Live Demo
-- Frontend: [coming soon]
-- Backend API: [coming soon]
-
 ## 🛠️ Tech Stack
 - **Frontend:** React, Redux Toolkit, React Router
 - **Backend:** Node.js, Express.js
