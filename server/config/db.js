@@ -7,9 +7,13 @@ const connectDB = async () => {
     return instance;
   }
   try {
-    instance = await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/vortex");
+    instance = await mongoose.connect(
+      process.env.MONGO_URI || "mongodb://localhost:27017/vortex",
+    );
     console.log("MongoDB Connected Successfully");
-    mongoose.connection.on("disconnected", () => { instance = null; });
+    mongoose.connection.on("disconnected", () => {
+      instance = null;
+    });
     return instance;
   } catch (error) {
     console.error("MongoDB Connection Failed:", error.message);

@@ -12,10 +12,13 @@ class BaseJob {
     this._error = null;
   }
 
-  get status() { return this._status; }
+  get status() {
+    return this._status;
+  }
 
   start() {
-    if (this._status !== "pending") throw new Error(`Cannot start job that is already ${this._status}`);
+    if (this._status !== "pending")
+      throw new Error(`Cannot start job that is already ${this._status}`);
     this._status = "running";
     this._startTime = Date.now();
     console.log(`[${this.name}] Job started`);
@@ -40,8 +43,14 @@ class BaseJob {
   }
 
   getSummary() {
-    return { id: this.id, name: this.name, priority: this.priority,
-      status: this._status, elapsedTime: this.getElapsedTime() + "s", error: this._error };
+    return {
+      id: this.id,
+      name: this.name,
+      priority: this.priority,
+      status: this._status,
+      elapsedTime: this.getElapsedTime() + "s",
+      error: this._error,
+    };
   }
 
   async run() {

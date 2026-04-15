@@ -35,11 +35,21 @@ class EmailJob extends BaseJob {
     });
 
     console.log(`[EmailJob] Real email delivered to ${this.to}`);
-    return { type: "email", recipient: this.to, subject: this.subject, sentAt: new Date().toISOString() };
+    return {
+      type: "email",
+      recipient: this.to,
+      subject: this.subject,
+      sentAt: new Date().toISOString(),
+    };
   }
 
   getSummary() {
-    return { ...super.getSummary(), type: "EmailJob", recipient: this.to, subject: this.subject };
+    return {
+      ...super.getSummary(),
+      type: "EmailJob",
+      recipient: this.to,
+      subject: this.subject,
+    };
   }
 }
 

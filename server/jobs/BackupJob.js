@@ -1,6 +1,6 @@
 const BaseJob = require("./BaseJob");
-const fs = require("fs");       // built-in Node.js — no install needed
-const path = require("path");   // built-in Node.js — no install needed
+const fs = require("fs"); 
+const path = require("path"); 
 
 class BackupJob extends BaseJob {
   constructor(taskData) {
@@ -17,7 +17,9 @@ class BackupJob extends BaseJob {
 
     // Validation
     if (!this.source || !this.destination)
-      throw new Error("BackupJob requires 'source' and 'destination' in payload");
+      throw new Error(
+        "BackupJob requires 'source' and 'destination' in payload",
+      );
 
     // Check source folder exists
     if (!fs.existsSync(this.source))
@@ -31,7 +33,12 @@ class BackupJob extends BaseJob {
 
     if (files.length === 0) {
       console.log(`[BackupJob] Source folder is empty — nothing to backup`);
-      return { type: "backup", source: this.source, destination: this.destination, filesCopied: 0 };
+      return {
+        type: "backup",
+        source: this.source,
+        destination: this.destination,
+        filesCopied: 0,
+      };
     }
 
     // Copy each file one by one
@@ -49,7 +56,9 @@ class BackupJob extends BaseJob {
       }
     }
 
-    console.log(`[BackupJob] Done! ${filesCopied} files copied to ${this.destination}`);
+    console.log(
+      `[BackupJob] Done! ${filesCopied} files copied to ${this.destination}`,
+    );
 
     return {
       type: "backup",
@@ -61,7 +70,12 @@ class BackupJob extends BaseJob {
   }
 
   getSummary() {
-    return { ...super.getSummary(), type: "BackupJob", source: this.source, destination: this.destination };
+    return {
+      ...super.getSummary(),
+      type: "BackupJob",
+      source: this.source,
+      destination: this.destination,
+    };
   }
 }
 
